@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="IE=edge" >
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+    <meta name="author" content="Angelo MIRABELLI">
+    <title>Esp 8266 Setting</title>    
+    <style>
+          body {
+              text-align: center;
+              margin: 0;
+              background-color: #555;
+              background: black;
+              background: url('https://vod.rcsobjects.it/youreporter/photoyr/big/815821.jpg');
+          }
+          textarea {
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            padding: 10px;
+            line-height: 1.5;
+            border-radius: 5px;
+            border: 1px solid #555;
+            box-shadow: 1px 1px 1px #999;
+            resize: none;
+        }
+        fieldset {
+            margin: 0 auto;
+            width: 400px;
+            padding: 1em;
+            border: 3px solid rgba(0,0,200,0.6);
+            border-radius: 1em;
+            box-shadow: 11px 11px 15px rgba(0,0,200,0.4);
+            background: rgba( 148,187,233,.95);
+                        
+        }
+        a, input.tasto, input.tastoRST, legend{
+              font-size: 1em;
+              letter-spacing: 1px;
+              text-transform: uppercase;
+              text-align: center;
+              border: 2px solid rgba(0,0,200,0.6);
+              background: lightgray;
+              color: rgba(0,0,200,0.6);
+              box-shadow: 1px 1px 2px rgba(0,255,250,0.4);
+              border-radius: 10px;
+              padding: 3px 10px;
+              display: inline-block;
+              cursor: default;
+        }
+        a:hover, input.tasto:hover {
+                color: green;
+                box-shadow: 7px 7px 8px rgba(0,200,0,0.4);
+                cursor: pointer;
+        }
+        .tastoRST:hover{
+                color: red;
+                box-shadow: 7px 7px 8px rgba(200,0,0,0.4);
+                cursor: pointer;
+        }
+        p {
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          text-align: left;
+          border: 1px solid gray;
+          background: lightgray;
+          color: rgba(0,0,200,0.6);
+          box-shadow: 1px 1px 2px rgba(0,0,200,0.4);
+          border-radius: 10px;
+          padding: 3px 10px;
+          display: inline-block;
+          cursor: default;
+        } 
+        p.boardname{
+            color: blueviolet;      
+        }
+        p.ip {
+          color: green;
+        }  
+        p.rssi{
+          color: yellow;
+          border-color: yellow;
+          width: 120px;       
+          text-align: center;   
+        }
+        h1.intestazione{
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-radius: 1em;
+            box-shadow: 11px 11px 15px rgba(200,200,200,0.4);
+            margin: 0 auto;
+            text-align: center; 
+            font-family: 'helvetica neue', helvetica, sans-serif;
+            color: lightgray;
+            padding: 10px; 
+            border: 3px solid black; 
+            background: rgba(20,200,200,1);
+            transform: translatey(5px);
+            stroke: green;
+            stroke-width: 2;
+        }
+        h1.linea {
+            padding: 5px; 
+            background: linear-gradient(to left, #e0e0e0 0%,#00172f 100%);
+            transform: translatey(-15px);
+        }
+        #background {
+          width: 100vw;
+          height: 100vh;
+          display: block;
+          position: fixed;
+          left: 0;
+          top: 0;
+          z-index: -1;
+          pointer-events: none;
+          border: none;
+        }
+        /* Notice how we're targeting the dialog box's title bar through the custom class */
+        .myclass .ZebraDialog_Title {
+            background: #687be9;
+            
+        }
+        .myclass .ZebraDialog_Body {
+            /*background-image: url("coffee_48.png");*/
+            font-size: 16px;
+            
+        }
+    </style>
+    <!-- Download Jquery-->
+    <script type = "text/javascript" 
+      src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.0/jquery.min.js">
+    </script>
+
+    <!-- Download Zebra Dialog plugin -->
+    <!-- for a specific version -->
+    <script src="https://cdn.jsdelivr.net/npm/zebra_dialog@latest/dist/zebra_dialog.min.js"></script>
+    <!-- for the most recent version of the "flat" theme -->
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/zebra_dialog@latest/dist/css/materialize/zebra_dialog.min.css">
+    <script type="text/javascript">
+          /*
+          $(document).ready(function animateHeart() {
+              $('.rssi').animate({
+                  fontSize: $('.rssi').css('fontSize') == '13px' ? '16px' : '13px'
+              }, 1000, animateHeart);
+          });
+          */
+    </script>
+    
+    <script>
+      //script for Zebra_dialog
+      $(document).ready(function(){
+        //$(".progress-bar").loading();
+        $('#element').on('click', function(e){
+          e.preventDefault();
+          $('#element').attr("disabled","true");
+          new $.Zebra_Dialog('You asked to restart the card..<br>'+
+                            'This will block the connection !!!<br><br>'+
+                            'Are you sure?',{                          
+            //attributi della Zebra Dialog
+            custom_class: "myclass",
+            type: "warning",
+            title: "Warning...",
+            show_close_button: false,
+            modal: false,
+            animation_speed_show: 200,
+            auto_close: 5500,     
+            auto_focus_button: 1,  // autofocus sul tasto "no"     
+            buttons: ["Yes","No"],
+            onClose: function(caption){
+              console.log(this);
+              if(caption=="Yes"){
+                new $.Zebra_Dialog("La scheda si riavvierà..<br>"+
+                                  "Appena il collegamento sarà ripristinato, la scheda sarà nuovamente disponibile", {
+                  auto_close: 4000,
+                  buttons: false,
+                  modal: true,
+                  show_close_button: false,
+                  position: ["right - 20", "bottom - 20"],
+                  onClose: function(){
+                    console.log("reboot");
+                    var request   = new XMLHttpRequest();
+                    request.open("Get", "/reset", false);
+                    request.send();
+                  }
+                });                
+              } else $('#element').removeAttr("disabled");
+            }            
+          });
+        });        
+      });
+    </script>    
+  </head>
+  <body>
+    <!--src="https://threejsfundamentals.org/threejs/threejs-responsive.html"-->
+    <iframe id="background"  ></iframe>
+      <h1 class="intestazione"  >--- Setting Page ---</h1>
+    <br>
+    <br>
+    <fieldset>
+      <legend style="text-align: left;"><strong> Parameters </strong></legend>    
+      <p id="ip" class="ip" title="IP address">IP</p>           
+      <p id="boardname" class="boardname" title="Board name">Board Name</p>           
+      <textarea id="infotextarea" rows="5" cols="50" disabled=true placeholder="info :/  Waiting data ..." title="Info system area">
+      </textarea>        
+      <p id="rssi" class="rssi" title="WiFi signal strength">RSSI </p>
+      <p id="ssid" class="ssid" title="WiFi network name"   >SSID </p>
+      <p id="temp" class="temp" title="Temperature"         >tTEMP</p>
+      <p id="humid" class="humid" title="Humidity"          >HUM  </p>        
+      <div id="progressbar-1" class="progress-bar" data-percent = "40"></div>
+    </fieldset> 
+    <br>
+    <fieldset>
+      <legend style="text-align: left;"><strong> File Manager </strong></legend>
+      <form id="formUpload" action="upload" method="post" enctype="multipart/form-data">
+        <fieldset style="box-shadow: none;">
+            <legend style=" text-align: left; "> SPIFFS Directory </legend>
+            <textarea id="dirtextarea" rows="5" cols="50" disabled=true placeholder="dir :/ Waiting data ..."></textarea>
+        </fieldset>
+        <br>
+        <fieldset style="box-shadow: none;">
+            <legend style=" text-align: left; "> Files upload </legend>
+            <input id="filename" type="file" name="name" required=true>            
+            <input id="tastofile" class="tasto" type="submit" value="Upload">            
+          </fieldset>   
+      </form>
+    </fieldset> 
+    <br>
+    <form action="login" method="get">
+            <input type="submit" value="Back" class="tasto">
+    </form>    
+    <form action="reset" method="get">
+            <input type="submit" value="REBOOT" class="tastoRST" id="element" title="Reboot the board!!!">
+    </form>   
+    <script>
+        const form        = document.getElementById('formUpload');
+        const fileName    = document.getElementById('filename');
+        const dirTextArea = document.getElementById('dirtextarea');
+        const ipAdress    = document.getElementById('ip');     
+        const infTextArea = document.getElementById('infotextarea');
+        const rssi        = document.getElementById('rssi');
+        const ssid        = document.getElementById('ssid');
+        const boardName   = document.getElementById('boardname');
+        const temp        = document.getElementById('temp');
+        const humid       = document.getElementById('humid'); 
+        
+        let heart = true; // flag for heartbeat animation
+        let pxRSSI = '13px'; 
+        var uniqueURL = "/directory"; 
+        
+        $(document).ready(function animateHeart() {
+              if(heart) pxRSSI='13px'
+                else pxRSSI='16px';
+              $('.rssi').animate({
+                fontSize: $('.rssi').css('fontSize') == pxRSSI ? '16px' : pxRSSI
+              }, 1000, animateHeart);
+          });
+        refresh();
+        setInterval(refresh, 5000 );
+        
+        function refresh (){
+            fetch(uniqueURL).then(function(response) { // get metodo
+                if (!response.ok){
+                  console.log("Error: promise reject ");
+                  return Promise.reject(response);
+                  //throw Error(response.statusText);
+                }
+                return response.json();
+            }).then(function (json) {
+                    let textArea = "dir:\ \n";
+                    const dir = json['dir'];
+                    for (let i=0; i<dir.length;i++){
+                        let br="\n";
+                        if (i===(dir.length-1)) br=""; // se è ultimo elemento non metti il capo linea (-1 perchè parte da 0 l'indice)
+                        textArea += dir[i].file[0]+" - "+ dir[i].file[1] + br;
+                    }
+                    dirTextArea.value = textArea;
+                    ipAdress.textContent = "IP: " + json['ip'];
+                    rssi.textContent     = "RSSI:  " + json['RSSI'] + " db";
+                    ssid.textContent     = "SSId:  " + json['SSID'] ;
+                    boardName.textContent= "Board: " + json['Board_Name']; 
+                    temp.textContent     = "Temp.: " + json['Temperature'] + '°C';
+                    humid.textContent    = "Humid.: " + json['Humidity'] + "%"; 
+                    textArea ="Info system: \n";
+                    const sysinfo = json['infosys'];  // indico 
+                    for (let i = 0; i<sysinfo.length; i++) {
+                        let br="\n";
+                        let strForCount = ''; // usata
+                        if (i===(sysinfo.length-1)) br=""; // se è ultimo elemento non metti il capo linea (-1 perchè parte da 0 l'indice)
+                        textArea += sysinfo[i]+strForCount+br;    
+                    }
+                    infTextArea.value = textArea;
+                    console.log("ok");
+                    rssi.setAttribute("style","color: green; border-color: green;");
+                    heart=1; // abilita heartbeat
+            }).catch (function (err) {
+                    rssi.setAttribute("style","border-color: red; color: red;");
+                    heart=false; //disabilita heartbeat
+                    console.log('Fetch problem: ' + err.message);
+            });
+        }
+    </script>
+  </body>
+</html>
