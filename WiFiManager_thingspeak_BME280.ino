@@ -317,6 +317,7 @@ void loop() {
       String replay = "Ciao " + String(msg.sender.firstName) + "!!!\nThe last data read:";
       replay += "\nLast temperature: " + String(lastTemperatureRead) + "°C";
       replay += "\nLast humidity: " + String(lastHumidityRead) + "%";
+      replay += "\nLast pressure: " + String(lastPressionRead) + "hPa";
       double s = lastTemperatureRead - 37.25*(2 - log10(double(lastHumidityRead))); // punto di rugiada
       replay += "\nDev point: " + String(s); 
       myBot.sendMessage(msg, replay );
