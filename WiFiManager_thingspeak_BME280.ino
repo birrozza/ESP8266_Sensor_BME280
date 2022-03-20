@@ -488,7 +488,7 @@ void dirRequest (AsyncWebServerRequest *request){
     //infosys.add(String("Max open files:  " + String(fs_info.maxOpenFiles)  + " files"));
     infosys.add(String("Comp. Date:      " + String(__DATE__)));
     infosys.add(String("Comp. Time:      " + String(__TIME__)));
-    infosys.add(String("Voltage:         " + String(ESP.getVcc()/1000.00)+"Volt"));
+    infosys.add(String("Voltage:         " + String(ESP.getVcc()/1000.00)+" Volt"));
     if (count!=1){  //se non è all'ultimo minuto conta i minuti
       infosys.add(String("Count down:      -" + String(count) + " min"));
     } else{ // se è all'ultimo minuto conta i secondi 
