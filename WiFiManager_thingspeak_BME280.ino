@@ -5,7 +5,7 @@
   - Markdown editor https://pandao.github.io/editor.md/en.html  o  https://stackedit.io/
 */
 #include <NTPClient.h>          // https://github.com/arduino-libraries/NTPClient (v 3.2.0)
-#include <WiFiUdp.h>            // library ESP8266 Arduino Core (ver 3.0.2)
+//#include <WiFiUdp.h>            // library ESP8266 Arduino Core (ver 3.0.2)
 #include "ESP8266WiFi.h"        // library ESP8266 Arduino Core (ver 3.0.2)
 #include "Ticker.h"             // library ESP8266 Arduino Core (ver 3.0.2)
 #include "ESP8266mDNS.h"        // library ESP8266 Arduino Core (ver 3.0.2)
@@ -20,7 +20,6 @@
 #include <ArduinoOTA.h>   
 #include <math.h>
 
-#include <Wire.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BME280.h>
 #define SEALEVELPRESSURE_HPA (1013.25)
@@ -28,7 +27,6 @@ Adafruit_BME280 bme; // I2C
 #include "utility.h"
 #include "C:\Users\computer\Desktop\esp8266 sketch\secret.h"   // always comment on this line (for development only) 
 //#include "secret.h" // uncomment if it's commented out
-#include "testiHTML.h" // la sintassi HTML con indentazione leggibile
 
 #define GOOGLE_SHEET_ENABLED //video 529
 #define TELEGRAM_BOT_ENABLED
@@ -49,7 +47,7 @@ float lastHumidityRead = 0.0;
 float lastPressionRead = 0.0;
 AsyncTelegram myBot;
 String stato="*ESP start"; // stato corrente del sistema
-int count=0;  
+int count=0;
 
 // Define NTP Client to get time
 WiFiUDP ntpUDP;
@@ -81,6 +79,7 @@ void configModeCallback (AsyncWiFiManager  *myWiFiManager) {
  
 void setup() {
   timeClient.begin();
+  delay(1000);
   
   Serial.begin(57600);
   SPIFFS.begin();   // Start the SPI Flash Files System
@@ -139,13 +138,16 @@ void setup() {
   Serial.println(WiFi.SSID());              // Tell us what network we're connected to
   Serial.print("IP address:\t");
   Serial.println(WiFi.localIP());           // Send the IP address of the ESP8266 to the computer
-
+  //delay(500);
+  //secured_client.setInsecure();
   // setup server services
   server.on("/", HTTP_GET,  [](AsyncWebServerRequest *request) {
+     Serial.println("Serving index.html");
     request->send(SPIFFS, "/index.html", "text/html");
   });
   server.on("/login",     HTTP_POST, handleLogin); // Call the 'handleLogin' function when a POST request is made to URI "/login" 
   server.on("/login",     HTTP_GET , [](AsyncWebServerRequest *request) {
+     Serial.println("serving login.html");
     request->send(SPIFFS, "/login.html", "text/html");
   });
   /*
@@ -157,6 +159,7 @@ void setup() {
   */
   server.on("/iprequest", HTTP_GET, handleIpRequest);
   server.on("/setpage", HTTP_GET, [](AsyncWebServerRequest *request) {
+    Serial.println("Serving setpage.html");
     request->send(SPIFFS, "/setting.html","text/html");   
   });
   server.on("/reset", HTTP_GET, [](AsyncWebServerRequest *request) { // chiedi il reset
@@ -169,7 +172,9 @@ void setup() {
   },handleFileUpload);
   
   server.onNotFound([](AsyncWebServerRequest *request){
-    request->send(404, "text/html", sitoNonTrovato);  
+    Serial.println("in onNotFound");
+    request->send(SPIFFS, "/sitonontrovato.html", "text/html");
+    //request->send(404, "text/html", sitoNonTrovato);  
   });
    
   server.begin();                           // Actually start the server
@@ -201,6 +206,7 @@ void setup() {
 
   ThingSpeak.begin(client);
   
+  
   // Set the Telegram bot properies
   myBot.setClock("CET-1CEST-2,M3.5.0/02:00:00,M10.5.0/03:00:00");  //CET-1CEST,M3.5.0,M10.5.0/3
   myBot.setUpdateTime(2000);
@@ -210,20 +216,17 @@ void setup() {
   Serial.print("\nTest Telegram connection... ");
   if (myBot.begin()){
     Serial.println("Telegram OK");
-    //alla fine mandi un messaggio al bot telegram dopo un'attesa di 2 sec
-    //delay(2000);
-    //String replay = "Avvio " + boardName;
-    //myBot.sendMessage(msg, replay);
+    
   } else { 
     Serial.println("Telegram NO OK");
   }
 
   // Prepare OTA handler
   ArduinoOTA.onStart([]() {
-    Serial.println("Start");
+    Serial.println("Start OTA");
   });
   ArduinoOTA.onEnd([]() {
-    Serial.println("\nEnd");
+    Serial.println("\nEnd OTA");
   });
   ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
     Serial.printf("Progress: %u%%\r", (progress / (total / 100)));
@@ -244,6 +247,7 @@ void setup() {
   //unsigned status = bme.begin();  
     // You can also pass in a Wire library object like &Wire2
     // status = bme.begin(0x76, &Wire2)
+  //Wire.setSpeed(CLOCK_SPEED_400KHZ);
   if (!bme.begin(0x76)) {
         Serial.println("Could not find a valid BME280 sensor, check wiring, address, sensor ID!");
         Serial.print("SensorID was: 0x"); Serial.println(bme.sensorID(),16);
@@ -254,42 +258,56 @@ void setup() {
         while (1) delay(10);
   } 
   Serial.println("BME280 Sensor ok...");
-  
+    // weather monitoring
+  Serial.println("-- Weather Station Scenario --");
+  Serial.println("forced mode, 1x temperature / 1x humidity / 1x pressure oversampling,");
+  Serial.println("filter off");
+  bme.setSampling(Adafruit_BME280::MODE_FORCED,
+                    Adafruit_BME280::SAMPLING_X1, // temperature
+                    Adafruit_BME280::SAMPLING_X1, // pressure
+                    Adafruit_BME280::SAMPLING_X1, // humidity
+                    Adafruit_BME280::FILTER_OFF,   
+                    Adafruit_BME280::STANDBY_MS_1000);  
+  timeClient.update();
+  delay(1000);
+
 } // end setup
 
 int seTimeOk = 0;
 
+unsigned long t1;
+ADC_MODE(ADC_VCC);
 void loop() {
+ /*
+  if ((millis()-t1)>2000){
+    Serial.println("-controllo messaggi: "+String(millis()-t1));
+    Serial.println(ESP.getVcc()/1000.00);
+    t1=millis();
+  }
+ */ 
   MDNS.update();
   ArduinoOTA.handle();
+  
   TBMessage msg;
-  timeClient.update();
-
   if (timeStatus()!=timeSet) { //set time only first time
     setTime(timeClient.getEpochTime());
     Serial.println("set time for first time!!!");
     seTimeOk++;
   }
     
-  sensors_event_t event;
-
   if (WiFi.status() != WL_CONNECTED) ESP.reset(); // verifica lo stato della  connessione
   
   if((((minute()-1) % 2 == 0)) && (second()==5)){ // ogni 2 min leggo i dati dal sensore 
+    // Only needed in forced mode! In normal mode, you can remove the next line.
+    bme.takeForcedMeasurement(); // has no effect in normal mode  
+    delay(50);
     lastTemperatureRead=bme.readTemperature();
+    delay(50);
     lastPressionRead=bme.readPressure() / 100.0F;
-    lastHumidityRead=bme.readHumidity(); 
-    /* 
-    if (((minute()-1) == 58) || ((minute()-1) == 28)) { // se la lettura avviene poco prima dell'invio registra stato
-          stato=stato+"[Read data ok ("+String(hour())+":"+String(minute())+":"+String(second())+")]";
-    }
-    
-    lastHumidityRead = umidita;
-    lastTemperatureRead =temperatura;
-    lastPressionRead = pressione;
-    */
+    delay(50);
+    lastHumidityRead=abs(bme.readHumidity()*100)/100; 
     Serial.println("Temp= "+String(lastTemperatureRead)+"°C,  Hum= "+String(lastHumidityRead)+"%, Press= "+String(lastPressionRead)+"hPa");
-    delay(1500);
+    delay(1000);
   }    
   if(((minute()==0) || (minute()== 30)) && (second()==0)){ // dopo altri due minuti invia la lettura
     // se l'invio è prima di una lettura allora imposta 15.99 di default la temperatura
@@ -309,39 +327,44 @@ void loop() {
       setTime(now()-240); // se ci sono problemi riporta indietro il tempo di 4 min e ricomincia daccapo
     }
   }
-  count=minute()>=30? 60-minute():30-minute(); // countdown in base al minuto
+  if (minute()>=30) {
+    count=60-minute();
+  }else count=30-minute() ;
   
   //telegram step
   if (myBot.getNewMessage(msg)) { //se è presente un messaggio
+    String replay="";
     if (msg.text.equalsIgnoreCase("read")) {
-      String replay = "Ciao " + String(msg.sender.firstName) + "!!!\nThe last data read:";
+      replay = "Ciao " + String(msg.sender.firstName) + "!!!\nThe last data read:";
       replay += "\nLast temperature: " + String(lastTemperatureRead) + "°C";
       replay += "\nLast humidity: " + String(lastHumidityRead) + "%";
       replay += "\nLast pressure: " + String(lastPressionRead) + "hPa";
       double s = lastTemperatureRead - 37.25*(2 - log10(double(lastHumidityRead))); // punto di rugiada
       replay += "\nDev point: " + String(s); 
-      myBot.sendMessage(msg, replay );
+      //myBot.sendMessage(msg, replay );
     } // read
     else if (msg.text.equalsIgnoreCase("wifi")){
-      String replay = "SSID: "+WiFi.SSID()+"\nRSSI: " +WiFi.RSSI()+"\nIP: " + WiFi.localIP().toString()+"\nLocal host: "+hostName+"\nBoard: "+boardName;
-      myBot.sendMessage(msg, replay);
+      replay = "SSID: "+WiFi.SSID()+"\nRSSI: " +WiFi.RSSI()+"\nIP: " + WiFi.localIP().toString()+"\nLocal host: "+hostName+"\nBoard: "+boardName;
+      //myBot.sendMessage(msg, replay);
     } // wifi
     else if (msg.text.equalsIgnoreCase("stato")){
-      String replay = "Stato: " + stato;
+      replay = "Stato: " + stato;
       replay += "\nCount: -"+String(count)+" min";
-      myBot.sendMessage(msg, replay);
+      //myBot.sendMessage(msg, replay);
     } // stato
     else if (msg.text.equalsIgnoreCase("reset")){
-      String replay = "Tra 5 secondi la scheda si riavvia" ;
+      replay = "Tra 5 secondi la scheda si riavvia" ;
       myBot.sendMessage(msg, replay);
       delay(5000);
       ESP.reset();
     } // reset
     else {
-      String replay = "Ciao!!! \nChoices available:\n- read -> temp & Humidity;\n- wifi -> wifi status;\n- stato -> stato;\n- reset -> to reset card.";
-      myBot.sendMessage(msg, replay);
+      replay = "Ciao!!! \nChoices available:\n- read -> temp & Humidity;\n- wifi -> wifi status;\n- stato -> stato;\n- reset -> to reset card.";
+      //myBot.sendMessage(msg, replay);
     }
+    myBot.sendMessage(msg, replay);
   } // end telegram bot
+  
 } // end loop
 
 ///////// WEB SERVER metod ///////////////////
@@ -373,13 +396,15 @@ void handleLogin(AsyncWebServerRequest *request) {                         // If
   Serial.println("in handlelogin");
   if( !request->hasArg("username") || !request->hasArg("password") // verifica se li argomenti esistono
       || request->arg("username") == NULL || request->arg("password") == NULL) { // If the POST request doesn't have username and password data
-    request->send(400, "text/html", invalidRequest);         // The request is invalid, so send HTTP status 400
+    //request->send(400, "text/html", invalidRequest);         
+    request->send(SPIFFS, "/invalidrequest.html", "text/html"); // The request is invalid, so send HTTP status 400 
     return;
   }
   if(request->arg("username") == user && request->arg("password") == password) { // If both the username and the password are correct
       request->send(SPIFFS, "/login.html");
   } else {                                                                              // Username and password don't match
-      request->send(401, "text/html", unauthorized);// unauthorized = stringa in formato HTML (vedi testiHTML.h)
+      //request->send(401, "text/html", unauthorized);// unauthorized = stringa in formato HTML (vedi testiHTML.h)
+      request->send(SPIFFS, "/nonautorizzato.html", "text/html");
   }
 }
 
@@ -458,10 +483,12 @@ void dirRequest (AsyncWebServerRequest *request){
     JsonArray infosys = doc.createNestedArray("infosys");
     infosys.add(String("Total Space:     " + String(fs_info.totalBytes)    + " byte"));
     infosys.add(String("Space Used:      " + String(fs_info.usedBytes)     + " byte"));
-    infosys.add(String("Block Size:      " + String(fs_info.blockSize)     + " byte"));
-    infosys.add(String("Page Size:       " + String(fs_info.totalBytes)    + " byte"));
-    infosys.add(String("Max open files:  " + String(fs_info.maxOpenFiles)  + " files"));
-    infosys.add(String("Max path lenght: " + String(fs_info.maxPathLength)));
+    //infosys.add(String("Block Size:      " + String(fs_info.blockSize)     + " byte"));
+    //infosys.add(String("Page Size:       " + String(fs_info.totalBytes)    + " byte"));
+    //infosys.add(String("Max open files:  " + String(fs_info.maxOpenFiles)  + " files"));
+    infosys.add(String("Comp. Date:      " + String(__DATE__)));
+    infosys.add(String("Comp. Time:      " + String(__TIME__)));
+    infosys.add(String("Voltage:         " + String(ESP.getVcc()/1000.00)+"Volt"));
     if (count!=1){  //se non è all'ultimo minuto conta i minuti
       infosys.add(String("Count down:      -" + String(count) + " min"));
     } else{ // se è all'ultimo minuto conta i secondi 
@@ -481,6 +508,7 @@ void dirRequest (AsyncWebServerRequest *request){
     doc["flag"] = seTimeOk;
     doc["compDate"]=__DATE__;
     doc["compTime"]=__TIME__;
+    doc["Voltage"]=String(ESP.getVcc()/1000.00);
     serializeJson(doc, json);
     request->send(200, "text/json", json);
 }
