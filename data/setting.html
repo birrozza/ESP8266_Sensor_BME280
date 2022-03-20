@@ -12,8 +12,55 @@
               margin: 0;
               background-color: #555;
               background: black;
-              background: url('https://vod.rcsobjects.it/youreporter/photoyr/big/815821.jpg');
+              background: linear-gradient(241.02deg, rgba(80, 128, 131, 0.72) 0%, rgba(23, 0, 165, 0.78) 100%);
           }
+          .eclips1{
+                position: absolute;
+                width: 350px;
+                height: 350px;
+                left: 0px;
+                top: 6px;
+                border-radius: 200px;
+                background: linear-gradient(214.17deg, rgba(155, 224, 170, 0.33) 76.21%, rgba(80, 62, 193, 0.33) 79.78%);
+                filter: blur(70px);
+                z-index: 1;
+            }
+            .eclips2{
+                position: absolute;
+                width: 348px;
+                height: 283px;
+                left: 950px;
+                top: 350px;
+                background: linear-gradient(180deg, #1700A5 0%, rgba(196, 196, 196, 0) 100%);
+                filter: blur(200px);
+                border-radius: 200px;
+                transform: rotate(-134.06deg);
+                z-index: 1;
+            }
+            .eclips4{
+                position: absolute;
+                width: 362px;
+                height: 360px;
+                left: 270px;
+                top: 360px;
+                background: linear-gradient(122.24deg, rgba(23, 0, 165, 0) -1.44%, #EBDBDB 97.59%);                
+                filter: blur(2px);
+                border-radius: 200px;
+                transform: rotate(-42.36deg);
+                z-index: -10;
+            }
+            .eclips5{
+                position: absolute;
+                width: 280px;
+                height: 280px;
+                left: 741.65px;
+                top: 227.68px;
+                background: linear-gradient(122.24deg, rgba(72, 230, 135, 0) -1.44%, rgba(255, 255, 255, 0.2) 97.59%, rgba(255, 255, 255, 0.2) 98.11%, rgba(255, 255, 255, 0.2) 98.11%);
+                filter: blur(2px);
+                border-radius: 200px;
+                transform: rotate(-134.06deg);
+                z-index: -10;
+            }
           textarea {
             font-size: 0.9rem;
             letter-spacing: 1px;
@@ -198,6 +245,10 @@
     </script>    
   </head>
   <body>
+    <div class=" position-absolute eclips1"></div>
+    <div class=" position-absolute eclips2"></div>            
+    <div class=" position-absolute eclips4"></div>        
+    <div class=" position-absolute eclips5"></div>
     <!--src="https://threejsfundamentals.org/threejs/threejs-responsive.html"-->
     <iframe id="background"  ></iframe>
       <h1 class="intestazione"  >--- Setting Page ---</h1>
