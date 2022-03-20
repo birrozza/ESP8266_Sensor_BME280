@@ -125,6 +125,12 @@
             font-size: 16px;
             
         }
+        #datatextarea{
+          color: white;
+          background-color: #00172f;
+          border-color: yellow;
+          overflow: hidden;
+        }
     </style>
     <!-- Download Jquery-->
     <script type = "text/javascript" 
@@ -201,12 +207,13 @@
       <legend style="text-align: left;"><strong> Parameters </strong></legend>    
       <p id="ip" class="ip" title="IP address">IP</p>           
       <p id="boardname" class="boardname" title="Board name">Board Name</p>           
-      <textarea id="infotextarea" rows="5" cols="50" disabled=true placeholder="info :/  Waiting data ..." title="Info system area">
+      <textarea id="infotextarea" rows="5" cols="50" disabled=true placeholder="info :/  Waiting data ...." title="Info system area">
       </textarea>        
       <p id="rssi" class="rssi" title="WiFi signal strength">RSSI </p>
       <p id="ssid" class="ssid" title="WiFi network name"   >SSID </p>
-      <p id="temp" class="temp" title="Temperature"         >tTEMP</p>
-      <p id="humid" class="humid" title="Humidity"          >HUM  </p>        
+      <textarea id="datatextarea" rows="3" cols="25" disabled=true placeholder="Waiting data ..." title="Data area">
+      </textarea> 
+      
       <div id="progressbar-1" class="progress-bar" data-percent = "40"></div>
     </fieldset> 
     <br>
@@ -241,9 +248,10 @@
         const rssi        = document.getElementById('rssi');
         const ssid        = document.getElementById('ssid');
         const boardName   = document.getElementById('boardname');
-        const temp        = document.getElementById('temp');
-        const humid       = document.getElementById('humid'); 
-        
+        //const temp        = document.getElementById('temp');
+        //const humid       = document.getElementById('humid'); 
+        const dataTextArea= document.getElementById('datatextarea'); 
+
         let heart = true; // flag for heartbeat animation
         let pxRSSI = '13px'; 
         var uniqueURL = "/directory"; 
@@ -279,8 +287,12 @@
                     rssi.textContent     = "RSSI:  " + json['RSSI'] + " db";
                     ssid.textContent     = "SSId:  " + json['SSID'] ;
                     boardName.textContent= "Board: " + json['Board_Name']; 
-                    temp.textContent     = "Temp.: " + json['Temperature'] + '°C';
-                    humid.textContent    = "Humid.: " + json['Humidity'] + "%"; 
+                    //temp.textContent     = "Temp.: " + json['Temperature'] + '°C';
+                    //humid.textContent    = "Humid.: " + json['Humidity'] + "%"; 
+                    textArea ="Temp. : " + json['Temperature'] + ' °C\n';
+                    textArea+="Humid.: " + json['Humidity'] + " %\n";
+                    textArea+="Press.: " + json['Pressure'] + " hPa\n";
+                    dataTextArea.value=textArea;
                     textArea ="Info system: \n";
                     const sysinfo = json['infosys'];  // indico 
                     for (let i = 0; i<sysinfo.length; i++) {
