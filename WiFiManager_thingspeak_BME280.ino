@@ -48,7 +48,7 @@ float lastPressionRead = 0.0;
 AsyncTelegram myBot;
 String stato="*ESP start"; // stato corrente del sistema
 int count=0;
-
+int blinking=0;
 // Define NTP Client to get time
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, "europe.pool.ntp.org", 3600);
@@ -308,6 +308,7 @@ void loop() {
     lastHumidityRead=abs(bme.readHumidity()*100)/100; 
     Serial.println("Temp= "+String(lastTemperatureRead)+"°C,  Hum= "+String(lastHumidityRead)+"%, Press= "+String(lastPressionRead)+"hPa");
     delay(1000);
+    blinking=1; // flag per aggiornamento dati
   }    
   if(((minute()==0) || (minute()== 30)) && (second()==0)){ // dopo altri due minuti invia la lettura
     // se l'invio è prima di una lettura allora imposta 15.99 di default la temperatura
@@ -505,7 +506,8 @@ void dirRequest (AsyncWebServerRequest *request){
     doc["Count"]= count;
     doc["hour"] = String(hour()); 
     doc["minute"] = String(minute());
-    doc["flag"] = seTimeOk;
+    doc["flag"] = blinking;
+    if (blinking==1) blinking=0; //resetta il flag del lampeggio dopo aver inviato il json
     doc["compDate"]=__DATE__;
     doc["compTime"]=__TIME__;
     doc["Voltage"]=String(ESP.getVcc()/1000.00);
