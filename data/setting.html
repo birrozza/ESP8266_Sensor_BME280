@@ -62,6 +62,7 @@
                 z-index: -10;
             }
           textarea {
+            color:black;
             font-size: 0.9rem;
             letter-spacing: 1px;
             padding: 10px;
@@ -173,7 +174,7 @@
             
         }
         #datatextarea{
-          color: white;
+          color: yellow;
           background-color: #00172f;
           border-color: yellow;
           overflow: hidden;
@@ -264,7 +265,8 @@
       <p id="ssid" class="ssid" title="WiFi network name"   >SSID </p>
       <textarea id="datatextarea" rows="3" cols="25" disabled=true placeholder="Waiting data ..." title="Data area">
       </textarea> 
-      
+      <!--<p id="contatore">....</p>-->
+
       <div id="progressbar-1" class="progress-bar" data-percent = "40"></div>
     </fieldset> 
     <br>
@@ -301,21 +303,43 @@
         const boardName   = document.getElementById('boardname');
         //const temp        = document.getElementById('temp');
         //const humid       = document.getElementById('humid'); 
+        //const contatore       = document.getElementById('contatore');
         const dataTextArea= document.getElementById('datatextarea'); 
-
         let heart = true; // flag for heartbeat animation
         let pxRSSI = '13px'; 
         var uniqueURL = "/directory"; 
-        
+        let cont=0;
+        let flag=0;
         $(document).ready(function animateHeart() {
               if(heart) pxRSSI='13px'
                 else pxRSSI='16px';
               $('.rssi').animate({
                 fontSize: $('.rssi').css('fontSize') == pxRSSI ? '16px' : pxRSSI
               }, 1000, animateHeart);
-          });
+        });
+        /*
+        $(document).ready(function fadeTxtArea() {
+          $('#dataTextArea').fadeOut('slow');      
+        });
+        */  
         refresh();
         setInterval(refresh, 5000 );
+        let id;
+        setInterval(()=>{          
+          if(flag==1){
+            id= setInterval(()=>{ 
+              console.log(`blink id:${id}`)
+              if(cont++%2!=0) {
+                dataTextArea.setAttribute("style","color: yellow;");
+              } else {
+                dataTextArea.setAttribute("style","color: green;");
+              }
+            },1000);
+          } else {
+          clearInterval(id);
+          dataTextArea.setAttribute("style","color: yellow;");
+          }
+        },5000);
         
         function refresh (){
             fetch(uniqueURL).then(function(response) { // get metodo
@@ -326,6 +350,8 @@
                 }
                 return response.json();
             }).then(function (json) {
+                    //dataTextArea.setAttribute("style","background-color: yellow;");
+                    flag=json['flag'];
                     let textArea = "dir:\ \n";
                     const dir = json['dir'];
                     for (let i=0; i<dir.length;i++){
@@ -338,11 +364,32 @@
                     rssi.textContent     = "RSSI:  " + json['RSSI'] + " db";
                     ssid.textContent     = "SSId:  " + json['SSID'] ;
                     boardName.textContent= "Board: " + json['Board_Name']; 
-                    //temp.textContent     = "Temp.: " + json['Temperature'] + '°C';
-                    //humid.textContent    = "Humid.: " + json['Humidity'] + "%"; 
-                    textArea ="Temp. : " + json['Temperature'] + ' °C\n';
-                    textArea+="Humid.: " + json['Humidity'] + " %\n";
-                    textArea+="Press.: " + json['Pressure'] + " hPa\n";
+                    let arraydata=[`Temp. : ${json['Temperature']} °C\n`,`Humid.: ${json['Humidity']} %\n`,`Press.: ${json['Pressure']} hPa\n`,"---"];
+                    /*
+                    textArea="";
+                    let i=0;
+                    let ricorsione= function(){
+                      textArea+=arraydata[i++];
+                     dataTextArea.textContent="";
+                      if(i>2) return;
+                      setTimeout(()=>{},1000);
+                      //console.log(i)
+                      dataTextArea.textContent=textArea;
+                      ricorsione();
+                    };
+                    ricorsione();
+                    textArea="";
+                    */
+                    /*textArea="Press.: " + json['Pressure'] + " hPa\n";
+                    dataTextArea.value=textArea;
+                    for(let i=0; i<100; i++){
+                      dataTextArea.value="";
+                      console.log(".");}
+                    textArea="Humid.: " + json['Humidity'] + " %\n"+"Press.: " + json['Pressure'] + " hPa\n";
+                    dataTextArea.value=textArea;
+                    for(let i=0; i<200; i++){console.log(".");}*/
+                    
+                    textArea="Temp. : " + json['Temperature'] + ' °C\n'+"Humid.: " + json['Humidity'] + " %\n"+"Press.: " + json['Pressure'] + " hPa\n";
                     dataTextArea.value=textArea;
                     textArea ="Info system: \n";
                     const sysinfo = json['infosys'];  // indico 
@@ -356,12 +403,14 @@
                     console.log("ok");
                     rssi.setAttribute("style","color: green; border-color: green;");
                     heart=1; // abilita heartbeat
+                    //dataTextArea.setAttribute("style","background-color: black;");
             }).catch (function (err) {
                     rssi.setAttribute("style","border-color: red; color: red;");
                     heart=false; //disabilita heartbeat
                     console.log('Fetch problem: ' + err.message);
             });
-        }
+            
+          } 
     </script>
   </body>
 </html>
