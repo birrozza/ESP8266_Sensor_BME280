@@ -176,6 +176,15 @@
             const userName = document.getElementById('username');
             const passWord = document.getElementById('password');
             
+            let dataGiornaliera=new Date();
+            dataGiornaliera=dataGiornaliera.toDateString();
+            let a=localStorage.getItem('dataGiornaliera');
+            
+            if (dataGiornaliera==a) {
+                console.log("login non necessario");
+                form.setAttribute("method","GET");
+                button.click();
+            }
             //ALERT
             window.alert = function (message) {
                 var a = document.createElement('div');
@@ -203,7 +212,7 @@
                     passWord.style.cursor = 'default';
                     form.style.filter = 'blur(2px)';
                     alert('Complete the username and password fields!!! Click here to close....');
-                }
+                } else localStorage.setItem('dataGiornaliera',dataGiornaliera);
             };
         </script>
     </body>
