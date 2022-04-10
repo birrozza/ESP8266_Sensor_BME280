@@ -72,25 +72,28 @@
               box-shadow: 1px 1px 1px #999;
               resize: none;
           }
-          /*blink textarea*/
-          #datatextarea {
+          #datatextarea{
+              color: yellow;
+              background-color: #00172f;
+              border-color: yellow;
+              overflow: hidden;
               animation-name: animate;
               animation-duration: 2s;
               animation-iteration-count: infinite;          
           }
           @keyframes animate {
               0% {
-                color: rgb(5, 51, 255);
-                box-shadow: 0px 0px yellow;
+                  color: rgb(5, 51, 255);
+                  box-shadow: 0px 0px yellow;
               }
               50%{
-                box-shadow: 10px 10px 20px  pink;
+                  box-shadow: 10px 10px 20px  pink;
               }
               100% {
-                color: yellow;
-                box-shadow: 0px 0px yellow;
+                  color: yellow;
+                  box-shadow: 0px 0px yellow;
               }          
-          } /*end blink*/
+          } 
           fieldset {
               margin: 0 auto;
               width: 400px;
@@ -190,12 +193,7 @@
             /*background-image: url("coffee_48.png");*/
               font-size: 16px;            
           }
-          #datatextarea{
-              color: yellow;
-              background-color: #00172f;
-              border-color: yellow;
-              overflow: hidden;
-          }
+          
     </style>
     <!-- Download Jquery-->
     <script type = "text/javascript" 
@@ -206,16 +204,7 @@
     <script src="https://cdn.jsdelivr.net/npm/zebra_dialog@latest/dist/zebra_dialog.min.js"></script>
     <!-- for the most recent version of the "flat" theme -->
     <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/zebra_dialog@latest/dist/css/materialize/zebra_dialog.min.css">
-    <script type="text/javascript">
-          /*
-          $(document).ready(function animateHeart() {
-              $('.rssi').animate({
-                  fontSize: $('.rssi').css('fontSize') == '13px' ? '16px' : '13px'
-              }, 1000, animateHeart);
-          });
-          */
-    </script>    
+        href="https://cdn.jsdelivr.net/npm/zebra_dialog@latest/dist/css/materialize/zebra_dialog.min.css">   
     <script>
       //script for Zebra_dialog
       $(document).ready(function(){
@@ -366,7 +355,7 @@
                     rssi.textContent     = "RSSI:  " + json['RSSI'] + " db";
                     ssid.textContent     = "SSId:  " + json['SSID'] ;
                     boardName.textContent= "Board: " + json['Board_Name']; 
-                    let arraydata=[`Temp. : ${json['Temperature']} °C\n`,`Humid.: ${json['Humidity']} %\n`,`Press.: ${json['Pressure']} hPa\n`,"---"];
+                    //let arraydata=[`Temp. : ${json['Temperature']} °C\n`,`Humid.: ${json['Humidity']} %\n`,`Press.: ${json['Pressure']} hPa\n`,"---"];
                     /*
                     textArea="";
                     let i=0;
