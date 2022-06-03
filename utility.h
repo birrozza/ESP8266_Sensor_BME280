@@ -1,4 +1,5 @@
-
+#ifndef _UTILITY_H_
+#define _UTILITY_H_
 /// Error codes for Thingspeak ervice
 
 String msgFeedBack(int httpCode) { /// diagnostica: codici d'errore ThingSpeak
@@ -19,3 +20,5 @@ String msgFeedBack(int httpCode) { /// diagnostica: codici d'errore ThingSpeak
     default  : return String("("+String(httpCode)+") Uncoded error!");
   }
 }
+
+#endif
