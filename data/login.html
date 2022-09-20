@@ -210,10 +210,10 @@
             var uniqueURL = "/iprequest";
             
             fetch(uniqueURL).then(function(response){
-                //console.log(response);            
+                /*console.log(response);*/            
                 return response.json();
             }).then(function (json){
-                //console.log("json");
+                /*console.log("json");*/
                 ipAdress.textContent = "IP " + json['ip'];
                 head.textContent = `:: Temperature & Humidity in ${json['city']} (${json['country']}) ::`;
                 tempFrame.src = json['temp'];
@@ -225,8 +225,8 @@
             });
             function spinnerFunction(){
                 const spanElem = document.getElementById("spanElement");
-                spanElem.classList.add("spinner-border-sm"); // crea class con valore
-                spanElem.className+=" spinner-border text-muted"; // aggiungi altri valori a class
+                spanElem.classList.add("spinner-border-sm"); /* crea class con valore*/
+                spanElem.className+=" spinner-border text-muted"; /* aggiungi altri valori a class*/
             }
             function nascondiHeaderIn(){
                 head.className +="animate__animated animate__flipOutX";

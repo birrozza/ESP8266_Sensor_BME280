@@ -204,16 +204,16 @@
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/zebra_dialog@latest/dist/css/materialize/zebra_dialog.min.css">   
     <script>
-      //script for Zebra_dialog
+      /*script for Zebra_dialog*/
       $(document).ready(function(){
-        //$(".progress-bar").loading();
+        /*$(".progress-bar").loading();*/
         $('#element').on('click', function(e){
           e.preventDefault();
           $('#element').attr("disabled","true");
           new $.Zebra_Dialog('You asked to restart the card..<br>'+
                             'This will block the connection !!!<br><br>'+
                             'Are you sure?',{                          
-            //attributi della Zebra Dialog
+            /*attributi della Zebra Dialog*/
             custom_class: "myclass",
             type: "warning",
             title: "Warning...",
@@ -221,13 +221,13 @@
             modal: false,
             animation_speed_show: 200,
             auto_close: 5500,     
-            auto_focus_button: 1,  // autofocus sul tasto "no"     
+            auto_focus_button: 1,  /* autofocus sul tasto "no"  */   
             buttons: ["Yes","No"],
             onClose: function(caption){
               console.log(this);
               if(caption=="Yes"){
-                new $.Zebra_Dialog("La scheda si riavvierà..<br>"+
-                                  "Appena il collegamento sarà ripristinato, la scheda sarà nuovamente disponibile", {
+                new $.Zebra_Dialog("La scheda si riavviera'..<br>"+
+                                  "Appena il collegamento sara' ripristinato, la scheda sara' nuovamente disponibile", {
                   auto_close: 4000,
                   buttons: false,
                   modal: true,
@@ -253,7 +253,7 @@
     <div class=" position-absolute eclips4"></div>        
     <div class=" position-absolute eclips5"></div>
     <!--src="https://threejsfundamentals.org/threejs/threejs-responsive.html"-->
-    <iframe id="background"  ></iframe>
+    <iframe id="background"></iframe>
       <h1 class="intestazione"  >--- Setting Page ---</h1>
     <br>
     <br>
@@ -302,17 +302,17 @@
         const rssi        = document.getElementById('rssi');
         const ssid        = document.getElementById('ssid');
         const boardName   = document.getElementById('boardname');
-        //const temp        = document.getElementById('temp');
-        //const humid       = document.getElementById('humid'); 
-        //const contatore       = document.getElementById('contatore');
+        /*const temp        = document.getElementById('temp');*/
+        /*const humid       = document.getElementById('humid'); */
+        /*const contatore       = document.getElementById('contatore');*/
         const dataTextArea= document.getElementById('datatextarea'); 
-        let heart = true; // flag for heartbeat animation
+        let heart = true; /* flag for heartbeat animation*/
         let pxRSSI = '13px'; 
         var uniqueURL = "/directory"; 
         let cont=0;
         let flag=0;
         $(document).ready(function animateHeart() {
-              if(heart) pxRSSI='13px'
+              if(heart) pxRSSI='13px';
                 else pxRSSI='16px';
               $('.rssi').animate({
                 fontSize: $('.rssi').css('fontSize') == pxRSSI ? '16px' : pxRSSI
@@ -323,16 +323,16 @@
         setInterval(refresh, 5000 );
         let id;
         function refresh (){
-            fetch(uniqueURL).then(function(response) { // get metodo
+            fetch(uniqueURL).then(function(response) { /* get metodo*/
                 if (!response.ok){
                   console.log("Error: promise reject ");
                   return Promise.reject(response);
-                  //throw Error(response.statusText);
+                  /*throw Error(response.statusText);*/
                 }
                 return response.json();
             }).then(function (json) {
-                    //dataTextArea.setAttribute("style","background-color: yellow;");
-                    //flag=json['flag'];
+                    /*dataTextArea.setAttribute("style","background-color: yellow;");*/
+                    /*flag=json['flag'];*/
                     if(json['flag']=='1'){
                       console.log('blink-on');
                       dataTextArea.setAttribute("style","animation-duration: 2s;");
@@ -344,7 +344,7 @@
                     const dir = json['dir'];
                     for (let i=0; i<dir.length;i++){
                         let br="\n";
-                        if (i===(dir.length-1)) br=""; // se è ultimo elemento non metti il capo linea (-1 perchè parte da 0 l'indice)
+                        if (i===(dir.length-1)) br=""; /* se e' ultimo elemento non metti il capo linea (-1 perche' parte da 0 l'indice)*/
                         textArea += dir[i].file[0]+" - "+ dir[i].file[1] + br;
                     }
                     dirTextArea.value = textArea;
@@ -352,8 +352,8 @@
                     rssi.textContent     = "RSSI:  " + json['RSSI'] + " db";
                     ssid.textContent     = "SSId:  " + json['SSID'] ;
                     boardName.textContent= "Board: " + json['Board_Name']; 
-                    //let arraydata=[`Temp. : ${json['Temperature']} °C\n`,`Humid.: ${json['Humidity']} %\n`,`Press.: ${json['Pressure']} hPa\n`,"---"];
-                    /*
+                    /*let arraydata=[`Temp. : ${json['Temperature']} °C\n`,`Humid.: ${json['Humidity']} %\n`,`Press.: ${json['Pressure']} hPa\n`,"---"];
+                    
                     textArea="";
                     let i=0;
                     let ricorsione= function(){
@@ -361,14 +361,13 @@
                       dataTextArea.textContent="";
                       if(i>2) return;
                       setTimeout(()=>{},1000);
-                      //console.log(i)
+                      
                       dataTextArea.textContent=textArea;
                       ricorsione();
                     };
                     ricorsione();
                     textArea="";
-                    */
-                    /*textArea="Press.: " + json['Pressure'] + " hPa\n";
+                    textArea="Press.: " + json['Pressure'] + " hPa\n";
                     dataTextArea.value=textArea;
                     for(let i=0; i<100; i++){
                       dataTextArea.value="";
@@ -377,24 +376,24 @@
                     dataTextArea.value=textArea;
                     for(let i=0; i<200; i++){console.log(".");}*/
                     
-                    textArea="Temp. : " + json['Temperature'] + ' °C\n'+"Humid.: " + json['Humidity'] + " %\n"+"Press.: " + json['Pressure'] + " hPa\n";
+                    textArea="Temp. : " + json['Temperature'] + " \u00B0C\n"+"Humid.: " + json['Humidity'] + " %\n"+"Press.: " + json['Pressure'] + " hPa\n";
                     dataTextArea.value=textArea;
                     textArea ="Info system: \n";
-                    const sysinfo = json['infosys'];  // indico 
+                    const sysinfo = json['infosys'];  /* indico */
                     for (let i = 0; i<sysinfo.length; i++) {
                         let br="\n";
-                        let strForCount = ''; // usata
-                        if (i===(sysinfo.length-1)) br=""; // se è ultimo elemento non metti il capo linea (-1 perchè parte da 0 l'indice)
+                        let strForCount = ''; /* usata*/
+                        if (i===(sysinfo.length-1)) br=""; /* se e' ultimo elemento non metti il capo linea (-1 perche' parte da 0 l'indice)*/
                         textArea += sysinfo[i]+strForCount+br;    
                     }
                     infTextArea.value = textArea;
                     console.log("ok");
                     rssi.setAttribute("style","color: green; border-color: green;");
-                    heart=1; // abilita heartbeat
-                    //dataTextArea.setAttribute("style","background-color: black;");
+                    heart=1; /* abilita heartbeat*/
+                    /*dataTextArea.setAttribute("style","background-color: black;");*/
             }).catch (function (err) {
                     rssi.setAttribute("style","border-color: red; color: red;");
-                    heart=false; //disabilita heartbeat
+                    heart=false; /*disabilita heartbeat*/
                     console.log('Fetch problem: ' + err.message);
             });            
           } 

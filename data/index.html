@@ -185,18 +185,18 @@
                 form.setAttribute("method","GET");
                 button.click();
             }
-            //ALERT
+            /*ALERT*/
             window.alert = function (message) {
                 var a = document.createElement('div');
-                //regole di stile CSS
+                /*regole di stile CSS*/
                 let beep = new Audio("https://www.soundjay.com/buttons/sounds/beep-24.mp3");
                 beep.play();
-                a.style.cssText = "cursor: pointer; width:30vw; height:85px; border:1px solid red; border-radius:5px; padding:10px; background:lightgray; box-shadow:0px 0px 8px #0006; position:fixed; top:20px; right:0; left:0; margin:auto; font-family: \"Arial\", sans-serif; color:black; z-index:1000; box-shadow: 5px 10px 20px 0 rgba(100,200,100,0.8), 0 6px 20px 0 rgba(200,200,200,0.5);transform: translate(0%, 70%);";
+                a.style.cssText = "cursor: pointer; width:30vw; height:85px; border:1px solid red; border-radius:5px; padding:10px; background:lightgray; box-shadow:0px 0px 8px #0006; position:fixed; top:20px; right:0; left:0; margin:auto; font-family: 'Arial', sans-serif; color:black; z-index:1000; box-shadow: 5px 10px 20px 0 rgba(100,200,100,0.8), 0 6px 20px 0 rgba(200,200,200,0.5);transform: translate(0%, 70%);";
                 a.innerHTML = "<b>Attenzione</b><br><br>" + message;
                 document.body.appendChild(a);
                 a.addEventListener("click", function() {
                     a.remove();
-                    button.disabled=false; //abilita il tasto
+                    button.disabled=false; /*abilita il tasto*/
                     button.style.cssText="cursor: pointer;";
                     userName.style.cursor = 'text';
                     passWord.style.cursor = 'text';
@@ -206,7 +206,7 @@
             form.onsubmit = function (e) {
                 if (userName.value === '' || passWord.value === '') {
                     e.preventDefault();
-                    button.disabled=true; // disabilita il tasto
+                    button.disabled=true; /* disabilita il tasto*/
                     button.style.cssText="background: rgb(1, 80, 1); cursor: default;";
                     userName.style.cursor = 'default';
                     passWord.style.cursor = 'default';
