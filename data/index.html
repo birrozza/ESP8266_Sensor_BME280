@@ -9,22 +9,23 @@
         <style type="text/css">
             @import "https://use.fontawesome.com/releases/v5.5.0/css/all.css";
             body {
-                /*position: relative; */               
+                margin: 0;
+                padding: 0;
                 display: flex;
                 justify-content: center;
-                /*align-items: center; */           
                 overflow: hidden; /* Hide scrollbars */
-                width: 100%;
-                height: 100%;
-                /*background: linear-gradient(241.02deg, rgba(35, 207, 73, 0.72) 0%, rgba(23, 0, 165, 0.78) 100%);*/
+                width: 100vw;
+                height: 100vh;
                 background: linear-gradient(241.02deg, rgba(80, 128, 131, 0.72) 0%, rgba(23, 0, 165, 0.78) 100%);
-                border-radius: 11px;                
             }
             .wrapper {
                 position: absolute;
-                width: 500px;
-                height: 350px;                
-                transform: translateY(50%);
+                width: 50vmax;
+                height: 350px; 
+                top: 50%;
+                left: 50%;
+                margin-top: -175px;
+                margin-left: -25vmax;            
                 background: linear-gradient(123.49deg, rgba(255, 254, 254, 0.3239) 17.91%, rgba(54, 53, 53, 0.4029) 100%);
                 border: 1px solid rgba(255, 255, 255, 0.28);
                 box-sizing: border-box;
@@ -44,36 +45,35 @@
             }
             .eclips2{
                 position: absolute;
-                width: 348px;
-                height: 283px;
-                left: 950px;
-                top: 350px;
-                background: linear-gradient(180deg, #1700A5 0%, rgba(196, 196, 196, 0) 100%);
-                filter: blur(200px);
-                border-radius: 200px;
-                transform: rotate(-134.06deg);
+                width: 34vmin;
+                height: 28vmin;
+                left: 20vw;
+                top: 65vh;
+                border-radius: 100%;
+                background: linear-gradient(180deg, #66656b 0%, rgba(15, 67, 116, 0.486) 100%);
+                color: #4caf50;
+                filter: blur(70px);   
             }
             .eclips4{
                 position: absolute;
-                width: 362px;
-                height: 360px;
-                left: 270px;
-                top: 360px;
+                width: 36vmin;
+                height: 36vmin;
+                left: 47vw;
+                top: 47vh;
                 background: linear-gradient(122.24deg, rgba(23, 0, 165, 0) -1.44%, #EBDBDB 97.59%);
-                
                 filter: blur(2px);
-                border-radius: 200px;
+                border-radius: 100%;
                 transform: rotate(-42.36deg);
             }
             .eclips5{
                 position: absolute;
-                width: 280px;
-                height: 280px;
-                left: 741.65px;
-                top: 227.68px;
+                width: 25vmin;
+                height: 25vmin;
+                left: 65vw;
+                top: 18vh;
                 background: linear-gradient(122.24deg, rgba(72, 230, 135, 0) -1.44%, rgba(255, 255, 255, 0.2) 97.59%, rgba(255, 255, 255, 0.2) 98.11%, rgba(255, 255, 255, 0.2) 98.11%);
                 filter: blur(2px);
-                border-radius: 200px;
+                border-radius: 100%;
                 transform: rotate(-134.06deg);
             }
             form {
@@ -150,11 +150,11 @@
             }            
         </style> 
     </head>
-    <body>
+    <body> <!---->
         <div class="eclips1"></div>
         <div class="eclips2"></div>
         <div class="eclips4"></div>
-        <div class="eclips5"></div>
+        <div class="eclips5"></div> <!---->
         <div class = "wrapper">
             <form action="login" method="POST">
                 <h1>Login</h1>
