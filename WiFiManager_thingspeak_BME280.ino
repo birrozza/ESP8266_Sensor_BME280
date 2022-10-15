@@ -20,6 +20,8 @@
 #include <ArduinoOTA.h>   
 #include <math.h>
 
+#pragma GCC optimize ("-Ofast")
+
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BME280.h>
 #define SEALEVELPRESSURE_HPA (1013.25)
@@ -310,7 +312,7 @@ void loop() {
     delay(1000);
     blinking=1; // flag per aggiornamento dati
   }    
-  if(((minute()==0) || (minute()== 30)) && (second()==0)){ // dopo altri due minuti invia la lettura
+  if(((minute()==0) || (minute()== 30)) && (second()==0) && lastTemperatureRead < 60 ){ 
     // se l'invio è prima di una lettura allora imposta 15.99 di default la temperatura
     ThingSpeak.setField(1, (lastTemperatureRead == 0.0? float(15.99) : lastTemperatureRead));
     // se l'invio è prima di una lettura allora imposta 50.99 di default l'umidità
