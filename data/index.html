@@ -29,8 +29,7 @@
                 background: linear-gradient(123.49deg, rgba(255, 254, 254, 0.3239) 17.91%, rgba(54, 53, 53, 0.4029) 100%);
                 border: 1px solid rgba(255, 255, 255, 0.28);
                 box-sizing: border-box;
-                backdrop-filter: blur(14px);
-                /* Note: backdrop-filter has minimal browser support */
+                backdrop-filter: blur(14px); /* Note: backdrop-filter has minimal browser support */
                 border-radius: 26px;
             }
             .eclips1{
@@ -112,7 +111,6 @@
                 outline: none;
                 background: none;
                 color: white;
-                /*color: rgb(134, 136, 233);*/
                 font-size: 18px;
                 width: 80%;
                 float: left;
@@ -130,13 +128,12 @@
                 cursor: pointer;
                 margin: 18px 0;
                 caret-color: rgba(0,0,0,0);
-                
+                transition: background 0.5s ease-out;
             }
             input.btn:hover {
                 background: green;    
             }
             input.btn:active {
-                /*background: rgb(1, 80, 1);*/
                 position:relative;
                 top: 3px;
             }
@@ -150,11 +147,11 @@
             }            
         </style> 
     </head>
-    <body> <!---->
+    <body> 
         <div class="eclips1"></div>
         <div class="eclips2"></div>
         <div class="eclips4"></div>
-        <div class="eclips5"></div> <!---->
+        <div class="eclips5"></div> 
         <div class = "wrapper">
             <form action="login" method="POST">
                 <h1>Login</h1>
@@ -176,11 +173,11 @@
             const userName = document.getElementById('username');
             const passWord = document.getElementById('password');
             
-            let dataGiornaliera=new Date();
-            dataGiornaliera=dataGiornaliera.toDateString();
-            let a=localStorage.getItem('dataGiornaliera');
+            let dataGiornaliera = new Date();
+            dataGiornaliera = dataGiornaliera.toDateString();
+            let a = localStorage.getItem('dataGiornaliera');
             
-            if (dataGiornaliera==a) {
+            if (dataGiornaliera = a) {
                 console.log("login non necessario");
                 form.setAttribute("method","GET");
                 button.click();
