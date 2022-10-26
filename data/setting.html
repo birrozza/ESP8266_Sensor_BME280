@@ -3,64 +3,70 @@
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="IE=edge" >
-    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,  initial-scale=1.0">
     <meta name="author" content="Angelo MIRABELLI">
     <title>Esp 8266 Setting</title>    
     <style>
-          body {
+          body{
               text-align: center;
+              padding: 0;
               margin: 0;
-              background-color: #555;
-              background: black;
+              width: 100vw;
+              height: 100vh;
+              cursor: default;
+              overflow-x: hidden; /* Hide x scrollbars */ 
               background: linear-gradient(241.02deg, rgba(80, 128, 131, 0.72) 0%, rgba(23, 0, 165, 0.78) 100%);
+              font-variant: small-caps;
+              font-family: Helvetica,Arial,sans-serif;
+              
           }
           .eclips1{
-              position: absolute;
-              width: 350px;
-              height: 350px;
-              left: 0px;
-              top: 6px;
-              border-radius: 200px;
-              background: linear-gradient(214.17deg, rgba(155, 224, 170, 0.33) 76.21%, rgba(80, 62, 193, 0.33) 79.78%);
-              filter: blur(70px);
-              z-index: 1;
-          }
-          .eclips2{
-              position: absolute;
-              width: 348px;
-              height: 283px;
-              left: 950px;
-              top: 350px;
-              background: linear-gradient(180deg, #1700A5 0%, rgba(196, 196, 196, 0) 100%);
-              filter: blur(200px);
-              border-radius: 200px;
-              transform: rotate(-134.06deg);
-              z-index: 1;
-          }
-          .eclips4{
-              position: absolute;
-              width: 362px;
-              height: 360px;
-              left: 270px;
-              top: 360px;
-              background: linear-gradient(122.24deg, rgba(23, 0, 165, 0) -1.44%, #EBDBDB 97.59%);                
-              filter: blur(2px);
-              border-radius: 200px;
-              transform: rotate(-42.36deg);
-              z-index: -10;
-          }
-          .eclips5{
-              position: absolute;
-              width: 280px;
-              height: 280px;
-              left: 741.65px;
-              top: 227.68px;
-              background: linear-gradient(122.24deg, rgba(72, 230, 135, 0) -1.44%, rgba(255, 255, 255, 0.2) 97.59%, rgba(255, 255, 255, 0.2) 98.11%, rgba(255, 255, 255, 0.2) 98.11%);
-              filter: blur(2px);
-              border-radius: 200px;
-              transform: rotate(-134.06deg);
-              z-index: -10;
-          }
+                position: absolute;
+                width: 35vmin;
+                height: 35vmin;
+                left: 0px;
+                top: 6px;
+                border-radius: 200px;
+                background: linear-gradient(214.17deg, rgba(155, 224, 170, 0.33) 76.21%, rgba(80, 62, 193, 0.33) 79.78%);
+                filter: blur(70px);
+                z-index: -1;
+            }
+            .eclips2{
+                position: absolute;
+                width: 34vmin;
+                height: 28vmin;
+                left: 20vw;
+                top: 65vh;
+                border-radius: 100%;
+                background: linear-gradient(180deg, #66656b 0%, rgba(15, 67, 116, 0.486) 100%);
+                color: #4caf50;
+                filter: blur(70px); 
+                z-index: -1;  
+            }
+            .eclips4{
+                position: absolute;
+                width: 36vmin;
+                height: 36vmin;
+                left: 47vw;
+                top: 47vh;
+                background: linear-gradient(122.24deg, rgba(23, 0, 165, 0) -1.44%, #EBDBDB 97.59%);
+                filter: blur(2px);
+                border-radius: 100%;
+                transform: rotate(-42.36deg);
+                z-index: -1;
+            }
+            .eclips5{
+                position: absolute;
+                width: 25vmin;
+                height: 25vmin;
+                left: 65vw;
+                top: 18vh;
+                background: linear-gradient(122.24deg, rgba(72, 230, 135, 0) -1.44%, rgba(255, 255, 255, 0.2) 97.59%, rgba(255, 255, 255, 0.2) 98.11%, rgba(255, 255, 255, 0.2) 98.11%);
+                filter: blur(2px);
+                border-radius: 100%;
+                transform: rotate(-134.06deg);
+                z-index: -1;
+            }
           textarea {
               color:black;
               font-size: 0.9rem;
@@ -96,7 +102,6 @@
           } 
           fieldset {
               margin: 0 auto;
-              width: 400px;
               padding: 1em;
               border: 3px solid rgba(0,0,200,0.6);
               border-radius: 1em;
@@ -152,12 +157,13 @@
               width: 120px;       
               text-align: center;   
           }
-          h1.intestazione{
+          .intestazione{
+              width:80%;
               letter-spacing: 1px;
               text-transform: uppercase;
               border-radius: 1em;
               box-shadow: 11px 11px 15px rgba(200,200,200,0.4);
-              margin: 0 auto;
+              margin: auto;
               text-align: center; 
               font-family: 'helvetica neue', helvetica, sans-serif;
               color: lightgray;
@@ -168,12 +174,14 @@
               stroke: green;
               stroke-width: 2;
           }
-          h1.linea {
+          /*h1.linea {
+            border: 1px solid red;
               padding: 5px; 
               background: linear-gradient(to left, #e0e0e0 0%,#00172f 100%);
               transform: translatey(-15px);
-          }
-          #background {
+          }*/
+          /*#background {
+            border: 1px solid red;
               width: 100vw;
               height: 100vh;
               display: block;
@@ -183,7 +191,7 @@
               z-index: -1;
               pointer-events: none;
               border: none;
-          }
+          }*/
           /* Notice how we're targeting the dialog box's title bar through the custom class */
           .myclass .ZebraDialog_Title {
               background: #687be9;              
@@ -191,7 +199,30 @@
           .myclass .ZebraDialog_Body {
             /*background-image: url("coffee_48.png");*/
               font-size: 16px;            
-          }          
+          }
+          @media screen and (max-width: 600px){
+            .intestazione{
+              font-size: 20px;
+              color: black;
+            }            
+            textarea#infotextarea, textarea#dirtextarea{
+              width: 85%;
+              font-size:medium;
+            }
+            p, p#rssi{
+              padding: 4px;
+              font-size: 14px !important;
+            }  
+          }
+          @media screen and (min-width: 600px){
+            fieldset{
+              width: 400px;              
+            }
+            textarea#infotextarea, textarea#dirtextarea{
+              width: 75%;
+              font-size:15px;
+            }   
+          }               
     </style>
     <!-- Download Jquery-->
     <script type = "text/javascript" 
@@ -253,17 +284,17 @@
     <div class=" position-absolute eclips4"></div>        
     <div class=" position-absolute eclips5"></div>
     <!--src="https://threejsfundamentals.org/threejs/threejs-responsive.html"-->
-    <iframe id="background"></iframe>
+    <!--<iframe id="background"></iframe>-->
       <h1 class="intestazione"  >--- Setting Page ---</h1>
     <br>
     <br>
     <fieldset>
       <legend style="text-align: left;"><strong> Parameters </strong></legend>    
-      <p id="ip" class="ip" title="IP address">IP</p>           
+      <p id="ip" class="ip" title="IP address">IP</p>          
       <p id="boardname" class="boardname" title="Board name">Board Name</p>           
       <textarea id="infotextarea" rows="5" cols="50" disabled=true placeholder="info :/  Waiting data ...." title="Info system area">
       </textarea>        
-      <p id="rssi" class="rssi" title="WiFi signal strength">RSSI </p>
+      <p id="rssi" class="rssi" title="WiFi signal strength">RSSI </p> 
       <p id="ssid" class="ssid" title="WiFi network name"   >SSID </p>
       <textarea id="datatextarea" rows="3" cols="25" disabled=true placeholder="Waiting data ..." title="Data area. When it blink new data are available!">
       </textarea> 
@@ -306,7 +337,7 @@
         /*const humid       = document.getElementById('humid'); */
         /*const contatore       = document.getElementById('contatore');*/
         const dataTextArea= document.getElementById('datatextarea'); 
-        let heart = true; /* flag for heartbeat animation*/
+        let heart = screen.width >400 ? true : false; /* flag for heartbeat animation*/
         let pxRSSI = '13px'; 
         var uniqueURL = "/directory"; 
         let cont=0;
@@ -389,7 +420,9 @@
                     infTextArea.value = textArea;
                     console.log("ok");
                     rssi.setAttribute("style","color: green; border-color: green;");
-                    heart=1; /* abilita heartbeat*/
+                    if (screen.width > 400) {
+                      heart=1; /* abilita heartbeat*/
+                    } else heart = false;  
                     /*dataTextArea.setAttribute("style","background-color: black;");*/
             }).catch (function (err) {
                     rssi.setAttribute("style","border-color: red; color: red;");
