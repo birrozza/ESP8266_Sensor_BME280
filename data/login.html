@@ -12,63 +12,59 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">     
         <style> 
             body{
-                height: 900px;
+                margin: 0;
+                padding: 0;
+                width: 100vw;
+                height: 100vh;
                 cursor: default;
                 overflow-x: hidden; /* Hide x scrollbars */ 
                 background: linear-gradient(241.02deg, rgba(80, 128, 131, 0.72) 0%, rgba(23, 0, 165, 0.78) 100%);
-            }
-            .bodyy{
                 font-variant: small-caps;
                 font-family: Helvetica,Arial,sans-serif;
-                /*background: linear-gradient(241.02deg, rgba(80, 128, 131, 0.72) 0%, rgba(23, 0, 165, 0.78) 100%);
-                */
+                /*border: 1px solid rgb(0, 4, 255);*/
             }
             .eclips1{
-                /*position: absolute;*/
-                width: 350px;
-                height: 350px;
+                position: absolute;
+                width: 35vmin;
+                height: 35vmin;
                 left: 0px;
                 top: 6px;
                 border-radius: 200px;
                 background: linear-gradient(214.17deg, rgba(155, 224, 170, 0.33) 76.21%, rgba(80, 62, 193, 0.33) 79.78%);
                 filter: blur(70px);
-                z-index: -10;
             }
             .eclips2{
-                /*position: absolute;*/
-                width: 348px;
-                height: 283px;
-                left: 950px;
-                top: 350px;
-                background: linear-gradient(180deg, #1700A5 0%, rgba(196, 196, 196, 0) 100%);
-                filter: blur(200px);
-                border-radius: 200px;
-                transform: rotate(-134.06deg);
-                z-index: -10;
+                position: absolute;
+                width: 34vmin;
+                height: 28vmin;
+                left: 20vw;
+                top: 65vh;
+                border-radius: 100%;
+                background: linear-gradient(180deg, #66656b 0%, rgba(15, 67, 116, 0.486) 100%);
+                color: #4caf50;
+                filter: blur(70px);   
             }
             .eclips4{
-                /*position: absolute;*/
-                width: 362px;
-                height: 360px;
-                left: 270px;
-                top: 360px;
-                background: linear-gradient(122.24deg, rgba(23, 0, 165, 0) -1.44%, #EBDBDB 97.59%);                
+                position: absolute;
+                width: 36vmin;
+                height: 36vmin;
+                left: 47vw;
+                top: 47vh;
+                background: linear-gradient(122.24deg, rgba(23, 0, 165, 0) -1.44%, #EBDBDB 97.59%);
                 filter: blur(2px);
-                border-radius: 200px;
+                border-radius: 100%;
                 transform: rotate(-42.36deg);
-                z-index: -10;
             }
             .eclips5{
-                /*position: absolute;*/
-                width: 280px;
-                height: 280px;
-                left: 741.65px;
-                top: 227.68px;
+                position: absolute;
+                width: 25vmin;
+                height: 25vmin;
+                left: 65vw;
+                top: 18vh;
                 background: linear-gradient(122.24deg, rgba(72, 230, 135, 0) -1.44%, rgba(255, 255, 255, 0.2) 97.59%, rgba(255, 255, 255, 0.2) 98.11%, rgba(255, 255, 255, 0.2) 98.11%);
                 filter: blur(2px);
-                border-radius: 200px;
+                border-radius: 100%;
                 transform: rotate(-134.06deg);
-                z-index: -10;
             }
             #head { 
                 background: linear-gradient(to right, #e1335c 0%,#73172f 100%);
@@ -95,18 +91,7 @@
                 width: 450px;
                 height: 260px;
                 z-index: 2;
-            }/*
-            .resp-temFrame {                
-                /*width: 100%;*/
-                /*height: 100%;               
-            } */
-            /*
-            .resp-humFrame {
-                /*width: 100%;
-                height: 100%;
-                /*width: 450px;
-                height: 260px;      
-            }*/
+            }
             .aut {
                 font-size: 12px;
                 font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -145,14 +130,15 @@
             .log{
                 color: white;
             }    
-            .container{
+            .container{                
+                width: 100%;
+                /*height: 60vh;*/
                 z-index: 1;
             }        
         </style>
     </head>
     <body>
-        <div class="container">
-            <div class="bodyy"> <!-- -->
+        <div class="container">            
                 <div class=" position-absolute eclips1"></div>
                 <div class=" position-absolute eclips2"></div>            
                 <div class=" position-absolute eclips4"></div>        
@@ -197,8 +183,7 @@
                         </form> 
                     </div>
                     <div class="log animate__animated" id="logElement"></div> 
-                <!--</div>-->                             
-            </div>            
+                <!--</div>-->                            
         </div>
         <script>
             const ipAdress = document.getElementById('idBouton');
