@@ -177,7 +177,7 @@
             dataGiornaliera = dataGiornaliera.toDateString();
             let a = localStorage.getItem('dataGiornaliera');
             
-            if (dataGiornaliera = a) {
+            if (dataGiornaliera == a) {
                 console.log("login non necessario");
                 form.setAttribute("method","GET");
                 button.click();
