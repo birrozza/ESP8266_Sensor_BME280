@@ -17,8 +17,7 @@
               overflow-x: hidden; /* Hide x scrollbars */ 
               background: linear-gradient(241.02deg, rgba(80, 128, 131, 0.72) 0%, rgba(23, 0, 165, 0.78) 100%);
               font-variant: small-caps;
-              font-family: Helvetica,Arial,sans-serif;
-              
+              font-family: Helvetica,Arial,sans-serif;              
           }
           .eclips1{
                 position: absolute;
@@ -30,8 +29,8 @@
                 background: linear-gradient(214.17deg, rgba(155, 224, 170, 0.33) 76.21%, rgba(80, 62, 193, 0.33) 79.78%);
                 filter: blur(70px);
                 z-index: -1;
-            }
-            .eclips2{
+          }
+          .eclips2{
                 position: absolute;
                 width: 34vmin;
                 height: 28vmin;
@@ -42,8 +41,8 @@
                 color: #4caf50;
                 filter: blur(70px); 
                 z-index: -1;  
-            }
-            .eclips4{
+          }
+          .eclips4{
                 position: absolute;
                 width: 36vmin;
                 height: 36vmin;
@@ -54,8 +53,8 @@
                 border-radius: 100%;
                 transform: rotate(-42.36deg);
                 z-index: -1;
-            }
-            .eclips5{
+          }
+          .eclips5{
                 position: absolute;
                 width: 25vmin;
                 height: 25vmin;
@@ -66,7 +65,7 @@
                 border-radius: 100%;
                 transform: rotate(-134.06deg);
                 z-index: -1;
-            }
+          }
           textarea {
               color:black;
               font-size: 0.9rem;
@@ -155,7 +154,8 @@
               color: yellow;
               border-color: yellow;
               width: 120px;       
-              text-align: center;   
+              text-align: center;
+              transition: ease 1s;   
           }
           .intestazione{
               width:80%;
@@ -174,24 +174,6 @@
               stroke: green;
               stroke-width: 2;
           }
-          /*h1.linea {
-            border: 1px solid red;
-              padding: 5px; 
-              background: linear-gradient(to left, #e0e0e0 0%,#00172f 100%);
-              transform: translatey(-15px);
-          }*/
-          /*#background {
-            border: 1px solid red;
-              width: 100vw;
-              height: 100vh;
-              display: block;
-              position: fixed;
-              left: 0;
-              top: 0;
-              z-index: -1;
-              pointer-events: none;
-              border: none;
-          }*/
           /* Notice how we're targeting the dialog box's title bar through the custom class */
           .myclass .ZebraDialog_Title {
               background: #687be9;              
@@ -221,8 +203,14 @@
             textarea#infotextarea, textarea#dirtextarea{
               width: 75%;
               font-size:15px;
-            }   
-          }               
+            }              
+          }
+          .toAnimate{
+              animation: animateHeart 2s infinite;
+            }
+          @keyframes animateHeart {
+              50% {background: green; color: white;}
+          }                
     </style>
     <!-- Download Jquery-->
     <script type = "text/javascript" 
@@ -283,9 +271,7 @@
     <div class=" position-absolute eclips2"></div>            
     <div class=" position-absolute eclips4"></div>        
     <div class=" position-absolute eclips5"></div>
-    <!--src="https://threejsfundamentals.org/threejs/threejs-responsive.html"-->
-    <!--<iframe id="background"></iframe>-->
-      <h1 class="intestazione"  >--- Setting Page ---</h1>
+    <h1 class="intestazione"  >--- Setting Page ---</h1>
     <br>
     <br>
     <fieldset>
@@ -298,7 +284,6 @@
       <p id="ssid" class="ssid" title="WiFi network name"   >SSID </p>
       <textarea id="datatextarea" rows="3" cols="25" disabled=true placeholder="Waiting data ..." title="Data area. When it blink new data are available!">
       </textarea> 
-      <!--<p id="contatore">....</p>-->
       <div id="progressbar-1" class="progress-bar" data-percent = "40"></div>
     </fieldset> 
     <br>
@@ -342,13 +327,6 @@
         var uniqueURL = "/directory"; 
         let cont=0;
         let flag=0;
-        $(document).ready(function animateHeart() {
-              if(heart) pxRSSI='13px';
-                else pxRSSI='16px';
-              $('.rssi').animate({
-                fontSize: $('.rssi').css('fontSize') == pxRSSI ? '16px' : pxRSSI
-              }, 1000, animateHeart);
-        });
         
         refresh();
         setInterval(refresh, 5000 );
@@ -420,13 +398,10 @@
                     infTextArea.value = textArea;
                     console.log("ok");
                     rssi.setAttribute("style","color: green; border-color: green;");
-                    if (screen.width > 400) {
-                      heart=1; /* abilita heartbeat*/
-                    } else heart = false;  
-                    /*dataTextArea.setAttribute("style","background-color: black;");*/
+                    rssi.classList.add("toAnimate");                    
             }).catch (function (err) {
                     rssi.setAttribute("style","border-color: red; color: red;");
-                    heart=false; /*disabilita heartbeat*/
+                    rssi.classList.remove("toAnimate");
                     console.log('Fetch problem: ' + err.message);
             });            
           } 
