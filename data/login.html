@@ -192,6 +192,9 @@
             const humiFrame  = document.getElementById('humFrame');
             const logElement = document.getElementById("logElement");
             
+            let dataGiornaliera = new Date();
+            localStorage.setItem('dataGiornaliera',dataGiornaliera.toDateString());
+            
             var uniqueURL = "/iprequest";
             
             fetch(uniqueURL).then(function(response){
